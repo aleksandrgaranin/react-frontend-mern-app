@@ -7,6 +7,7 @@ import SideDrawer from '../SideDrawer/SideDrawer'
 import Backdrop from '../../UIElements/Backdrop/Backdrop'
 
 
+
 import './MainNavigation.css'
 
 const MainNavigation = props => {
@@ -21,12 +22,12 @@ const MainNavigation = props => {
   }
   return (
     <React.Fragment>
-      {drawerIsOpen && <Backdrop  onClick={drawerCloseHandler}/>}
-      {drawerIsOpen && <SideDrawer>
+      {drawerIsOpen && <Backdrop onClick={drawerCloseHandler} />}
+       <SideDrawer show={drawerIsOpen} onClick={drawerCloseHandler}>
         <nav className="main-navigation__drawer-nav">
           <NavLinks />
         </nav>
-      </SideDrawer>}
+      </SideDrawer>
       <MainHeader>
         <button className="main-navigation__menu-btn" onClick={drawerOpenHandler}>
           <span />
