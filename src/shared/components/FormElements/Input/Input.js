@@ -1,26 +1,69 @@
-import React from 'react'
+import React, { useReducer } from 'react'
+
+import { validate } from '../../../Util/validators'
+
 import './Input.css'
 
+const inputReducer = (state, action) => {
+  switch (action.type) {
+    case 'CHANGE':
+      return {
+        ...state,
+        value: action.val,
+        isValid: validate(action.val, action.validators)
+      }
+    case 'TOUCH':
+      return {
+        ...state,
+        isTouche: true
+      }
+    default:
+      return state
+  }
+}
+
 const Input = props => {
-  const element = props.type === 'input' ? (
-      <input
-        id={props.id}
-        type={props.type}
-        placeholder={props.placeholder}
-      />
-    )
+  const [inputState, dispatch] = useReducer(inputReducer, {
+    value: '',
+    isValid: false,
+    isTouche: false
+  })
+
+  const changeHandler = event => {
+    dispatch({ type: 'CHANGE', val: event.target.value, validators: props.validators })
+  }
+
+  const toucheHandlet = () => {
+    dispatch({
+      type: 'TOUCH'
+    })
+  }
+
+  const element = props.element === 'input' ? (
+    <input
+      id={props.id}
+      type={props.type}
+      placeholder={props.placeholder}
+      onChange={changeHandler}
+      onBlur={toucheHandlet}
+      value={inputState.value}
+    />
+  )
     : (
       <textarea
         id={props.id}
         rows={props.rows || 3}
+        onChange={changeHandler}
+        onBlur={toucheHandlet}
+        value={inputState.value}
       />
     )
 
-
   return (
-    <div className={`form-control`}>
+    <div className={`form-control ${!inputState.isValid && inputState.isTouche && 'form-control--invalid'}`}>
       <label htmlFor={props.id}>{props.label}</label>
       {element}
+      {!inputState.isValid && inputState.isTouche && <p>{props.errorText}</p>}
     </div>
   )
 }
