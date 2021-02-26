@@ -3,7 +3,7 @@ import React, { useCallback, useReducer } from 'react'
 import Input from '../../shared/components/FormElements/Input/Input'
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../shared/Util/validators'
 
-import './NewPlace.css'
+import './PlaceForm.css'
 import Button from '../../shared/components/FormElements/Button/Button'
 
 const formReduser = (state, action) => {
@@ -44,6 +44,10 @@ const NewPlace = () => {
         isValid: false
       },
       description: {
+        value: '',
+        isValid: false
+      },
+      address: {
         value: '',
         isValid: false
       }
