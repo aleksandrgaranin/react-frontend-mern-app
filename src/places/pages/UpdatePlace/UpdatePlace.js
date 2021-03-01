@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import Input from '../../../shared/components/FormElements/Input/Input'
@@ -40,23 +40,53 @@ const DUMMY_PLACES = [
 
 
 const UpdatePlace = props => {
+  const [isLoading, setIsLoading] = useState(true)
+
   const placeId = useParams().placeId
 
   const identifiedPlace = DUMMY_PLACES.find(place => place.id === placeId)
 
-  const [formState, inputHandler] = useForm({
-    title: {
-      value: identifiedPlace.title,
-      isValid: true
+  const [formState, inputHandler, setFormData] = useForm(
+    {
+      title: {
+        value: '',
+        isValid: false
+      },
+      description: {
+        value: '',
+        isValid: false
+      }
     },
-    description: {
-      value: identifiedPlace.description,
-      isValid: true
-    },
-  })
+    false
+  )
+
+  useEffect(() => {
+    setFormData(
+      {
+        title: {
+          value: identifiedPlace.title,
+          isValid: true
+        },
+        description: {
+          value: identifiedPlace.description,
+          isValid: true
+        },
+      },
+      true
+    )
+    setIsLoading(false)
+  }, [setFormData, identifiedPlace])
+
+
   if (!identifiedPlace) {
     return <div className="center">
       <h2>Could not find place!</h2>
+    </div>
+  }
+
+  if (isLoading) {
+    return <div className="center">
+      <h2>LOADING!</h2>
     </div>
   }
 
@@ -66,6 +96,7 @@ const UpdatePlace = props => {
   }
 
   return (
+
     <form className="place-form" onSubmit={updateSubmitHandler}>
       <Input
         id="title"
@@ -91,6 +122,7 @@ const UpdatePlace = props => {
       />
       <Button type="submit" disabled={!formState.isValid}>UPDATE PLACE</Button>
     </form>
+
   )
 }
 

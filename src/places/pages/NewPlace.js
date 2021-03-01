@@ -1,9 +1,9 @@
 import React from 'react'
 
 import Input from '../../shared/components/FormElements/Input/Input'
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../shared/Util/validators'
 
-import { useForm } from '../../shared/hooks/form-hook'
+import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../shared/Util/validators'
+import { useForm } from '../../shared/hooks/form-hook'// Custom Hook
 
 import Button from '../../shared/components/FormElements/Button/Button'
 
@@ -11,23 +11,23 @@ import './PlaceForm.css'
 
 
 const NewPlace = () => {
-  const[formState, inputHandler] = useForm({
-    title: {
-      value: '',
-      isValid: false
+  const [formState, inputHandler] = useForm(
+    {
+      title: {
+        value: '',
+        isValid: false
+      },
+      description: {
+        value: '',
+        isValid: false
+      },
+      address: {
+        value: '',
+        isValid: false
+      }
     },
-    description: {
-      value: '',
-      isValid: false
-    },
-    address: {
-      value: '',
-      isValid: false
-    }
-  }, false)
-  
-  // console.log(formState.isValid)
-  
+    false
+  )
 
 
   const placeSubmitHandler = event => {
