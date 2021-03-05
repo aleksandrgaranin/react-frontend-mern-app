@@ -2,6 +2,7 @@ import React from 'react'
 
 import Card from '../../../shared/components/UIElements/Card/Card'
 import PlaceItem from '../PlaceItem/PlaceItem'
+import Button from '../../../shared/components/FormElements/Button/Button'
 
 import './PlaceList.css'
 
@@ -10,9 +11,9 @@ const PlaceList = props => {
   console.log(props.items)
   if (props.items.length === 0) {
     return <div className="place-list center">
-      <Card>
+      <Card style={{textAlign: "center", padding: "1rem"}}>
         No places Found. You can create One.
-        <button>Share place</button>
+        <Button to="/places/new">Share place</Button>
       </Card>
     </div>
   }

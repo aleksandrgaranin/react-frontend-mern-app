@@ -102,7 +102,7 @@ const UpdatePlace = props => {
         id="title"
         element="input"
         type="text"
-        lable="Title"
+        label="Title"
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Pleace enter a valid Title"
         onInput={inputHandler}
@@ -113,7 +113,7 @@ const UpdatePlace = props => {
         id="description"
         element="textarea"
         rows={5}
-        lable="Description"
+        label="Description"
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Pleace enter a valid description (at least 5 characters)."
         onInput={inputHandler}
