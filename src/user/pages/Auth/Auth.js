@@ -34,13 +34,37 @@ const Auth = () => {
   const authSubmitHandler = async event => {
     event.preventDefault()
     // console.log("AUTH LOGIC...", formState.inputs)
+    setIsLoading(true)
 
     if (isLoginMode) {
+      try {
+        const response = await fetch('http://localhost:5000/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value
+          })
+        })
+        const responseData = await response.json();
 
+        if (!response.ok) {
+          throw new Error(responseData.message)
+        }
+        console.log(responseData);
+        setIsLoading(false)
+        auth.login()
+
+      } catch (error) {
+        console.log(error)
+        setError(error.message || 'Somthing went wrong, pleace try again later.')
+        setIsLoading(false)
+      }
     } else {
 
       try {
-        setIsLoading(true);
         const response = await fetch('http://localhost:5000/api/users/signup', {
           method: 'POST',
           headers: {
@@ -90,7 +114,7 @@ const Auth = () => {
     setIsLogingMode(prevMode => !prevMode)
   }
 
-  const errorHandler = ()=> {
+  const errorHandler = () => {
     setError(null)
   }
 
@@ -98,7 +122,7 @@ const Auth = () => {
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={errorHandler}/>
+      <ErrorModal error={error} onClear={errorHandler} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>Login Required</h2>
