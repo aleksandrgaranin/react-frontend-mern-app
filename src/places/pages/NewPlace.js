@@ -62,10 +62,6 @@ const NewPlace = () => {
     } catch (error) {
 
     }
-
-
-
-
   }
 
   return (
