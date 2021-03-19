@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useHttpClient} from '../../shared/hooks/http-hook'
+import { useHttpClient } from '../../shared/hooks/http-hook'
 
 import PlaceList from '../components/PlaceList/PlaceList'
 import ErrorModal from '../../shared/components/ErrorModal/ErrorModal'
@@ -19,7 +19,6 @@ const UserPlaces = () => {
           `http://localhost:5000/api/places/user/${userId}`
         )
         const userPosts = responseData.places
-        console.log(userPosts)
         setLoadedPlaces(userPosts)
       } catch (err) {
 
@@ -28,6 +27,10 @@ const UserPlaces = () => {
     }
     fetchPlaces()
   }, [sendRequest, userId])
+
+  const placeDeletedHandler = (deletedPlaceId) => {
+    setLoadedPlaces(prevPlaces => prevPlaces.filter(place => place.id !== deletedPlaceId))
+  }
 
   // const loadedPlaces = DUMMY_PLACES.filter(place => place.creator === userId)
   return (
@@ -38,10 +41,10 @@ const UserPlaces = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+      {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} onDeletePlace={placeDeletedHandler} />}
     </React.Fragment>
   )
-  
+
 }
 
 export default UserPlaces
