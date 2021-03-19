@@ -15,13 +15,17 @@ import Auth from './user/pages/Auth/Auth'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userId, setUserId] = useState(false)
 
-  const login = useCallback(() => {
-    setIsLoggedIn(true)
+
+  const login = useCallback((uid) => {
+    setIsLoggedIn(true);
+    setUserId(uid);
   }, [])
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false)
+    setIsLoggedIn(false);
+    setUserId(null)
   }, [])
 
   let routes
@@ -35,7 +39,7 @@ const App = () => {
         <Route path="/:userId/places" exact>
           <UserPlaces />
         </Route>
-        <Route path="/places/new" exact>
+        <Route path="/places/new" exact> 
           <NewPlace />
         </Route>
         <Route path="/places/:placeId" exact>
@@ -67,6 +71,7 @@ const App = () => {
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
+        userId: userId,
         login: login,
         logout: logout
       }}
