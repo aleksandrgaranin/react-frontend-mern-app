@@ -54,7 +54,10 @@ const NewPlace = () => {
       await sendRequest(
         'http://localhost:5000/api/places',
         'POST',
-        formData 
+        formData, 
+        {
+          Authorization: 'Bearer '+ auth.token
+        }
       )
       history.push('/')
     } catch (error) {
@@ -77,7 +80,7 @@ const NewPlace = () => {
           errorText="Please enter a valid Title"
           onInput={inputHandler}
         />
-        <ImageUpload center id="image" onInput={inputHandler} />
+        <ImageUpload center id="image" onInput={inputHandler} errorText="Please provide an image." />
         <Input
           id="description"
           element="textarea"

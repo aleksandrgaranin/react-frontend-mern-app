@@ -54,7 +54,7 @@ const Auth = () => {
             'Content-Type': 'application/json'
           },
         );
-        auth.login(responseData.user.id);
+        auth.login(responseData.userId, responseData.token);
       } catch (error) {
 
       }
@@ -70,7 +70,7 @@ const Auth = () => {
           'POST',
           formData
         );
-        auth.login(responseData.user.id);
+        auth.login(responseData.userId, responseData.token);
       } catch (err) { }
     }
   }
@@ -118,7 +118,7 @@ const Auth = () => {
               onInput={inputHandler}
             />
           }
-          {!isLoginMode && <ImageUpload center id="image" onInput={inputHandler}  errorText="Please provide an image." />}
+          {!isLoginMode && <ImageUpload center id="image" onInput={inputHandler} errorText="Please provide an image." />}
           <Input
             id="email"
             element="input"
