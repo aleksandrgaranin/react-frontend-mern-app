@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import Input from '../../shared/components/FormElements/Input/Input'
 import ErrorModal from '../../shared/components/ErrorModal/ErrorModal'
 import LoadingSpinner from '../../shared/components/LoadingSpinner/LoadingSpinner'
+import ImageUpload from '../../shared/components/FormElements/ImageUpload/ImageUpload'
 
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../shared/Util/validators'
 import { useForm } from '../../shared/hooks/form-hook'// Custom Hook
@@ -44,19 +45,16 @@ const NewPlace = () => {
     event.preventDefault()
     console.log(formState.inputs) // send to back end
     try {
+      const formData = new FormData()
+      formData.append('title', formState.inputs.title.value)
+      formData.append('description', formState.inputs.description.value) 
+      formData.append('address', formState.inputs.address.value,)
+      formData.append('creator', auth.userId)
+      formData.append('image', formState.inputs.image.value)      
       await sendRequest(
         'http://localhost:5000/api/places',
         'POST',
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          creator: auth.userId
-        }),
-        {
-          'Content-Type': 'application/json'
-        },
-      
+        formData 
       )
       history.push('/')
     } catch (error) {
@@ -79,6 +77,7 @@ const NewPlace = () => {
           errorText="Please enter a valid Title"
           onInput={inputHandler}
         />
+        <ImageUpload center id="image" onInput={inputHandler} />
         <Input
           id="description"
           element="textarea"
