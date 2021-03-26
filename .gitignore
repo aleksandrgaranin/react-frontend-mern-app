@@ -24,5 +24,6 @@ yarn-error.log*
 
 # keys
 /ENV
+.env.production
 .env
 env.js
