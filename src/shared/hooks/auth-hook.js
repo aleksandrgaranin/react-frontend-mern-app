@@ -8,8 +8,6 @@ export const useAuth = () => {
   const [tokenExpirationDate, setTokenExpirationDate] = useState()
   const [userId, setUserId] = useState(false)
 
-
-
   const login = useCallback((uid, token, expirationDate) => {
     setToken(token);
     setUserId(uid);
@@ -42,7 +40,7 @@ export const useAuth = () => {
       clearTimeout(logoutTimer)
     }
   }, [token, logout, tokenExpirationDate])
-  
+
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
