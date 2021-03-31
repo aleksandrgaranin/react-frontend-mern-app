@@ -18,6 +18,7 @@ const UserPlaces = () => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}`
         )
+        console.log(responseData)
         const userPosts = responseData.places
         setLoadedPlaces(userPosts)
       } catch (err) {
